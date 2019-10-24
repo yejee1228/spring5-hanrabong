@@ -15,7 +15,26 @@ auth = (()=>{
         	$('#a_go_join').click(e=>{
 	        	e.preventDefault();
 	            alert('회원가입 클릭!!')
-	            join()
+	            $.getScript(auth_vue_js).done(()=>{
+        	$('head').html(auth_vue.join_head()),
+    	    $('body').html(auth_vue.join_body())
+	        $('<button>',{
+	        		text : 'Continue to checkout',
+	        		href : '#',
+	        		click : e=>{
+	        			e.preventDefault();
+	        			existId($('#cId').val())
+	        			
+	            			
+	            		
+	        		}
+	        })	
+        .addClass('btn btn-primary btn-lg btn-block')
+        .appendTo('#btn_join')
+        })
+        .fail(()=>{
+        	alert(WHEN_ERR)
+        })
         	})
         }).fail(()=>{
             	alert(WHEN_ERR)
@@ -26,38 +45,47 @@ auth = (()=>{
     	login()
     }
     let join=()=>{
-    	$.getScript(auth_vue_js).done(()=>{
-        	$('head').html(auth_vue.join_head()),
-    	    $('body').html(auth_vue.join_body())
-	        $('<button>',{
-	        		text : 'Continue to checkout',
-	        		href : '#',
-	        		click : e=>{
-	        			e.preventDefault();
-	        			let data = {cid : $('#cId').val(), cpw : $('#cPw').val(), cname : $('#cname').val()}
-	                    $.ajax({
-	                    	url : _+ '/hcust/join',
-	                    	type : 'POST',
-	                    	dataType : 'json',
-	                    	data : JSON.stringify(data),
-	                    	contentType : 'application/json',
-	                    	success : d => {
-	                    		alert('ajax 성공  >'+d.cid+', '+d.cpw + ', '+d.cname)
-	                    		login()
-	                    	},
-	                    	error : e => {
-	                    		alert('회원가입 실패')
-	                    	}
-	                    })
-	                }
-	        })	
-        .addClass('btn btn-primary btn-lg btn-block')
-        .appendTo('#btn_join')
-        })
-        .fail(()=>{
-        	alert(WHEN_ERR)
+    	let data = {cid : $('#cId').val(), cpw : $('#cPw').val(), 
+				cname : $('#cname').val(), cnum: $('#email').val()}
+        $.ajax({
+        	url : _+ '/hcusts/',
+        	type : 'POST',
+        	dataType : 'json',
+        	data : JSON.stringify(data),
+        	contentType : 'application/json',
+        	success : d => {
+        		alert('ajax 성공  >'+d.msg)
+        		login()
+        		
+        	},
+        	error : e => {
+        		alert('AJAX 실패2')
+        	}
         })
     }
+    
+    let existId =x=>{
+    	alert(x)
+        $.ajax({
+        	url : _+ '/hcusts/'+x+'/exist',
+        	type : 'GET',
+        	contentType : 'application/json',
+        	success : d => {
+        		alert('ajax exist성공  >'+d.msg)
+        		if(d.msg==='SUCCESS'){
+    				alert('회원가입완료')
+        			join()
+        		}else{
+        			alert('중복된 아이디입니다.')
+        		}
+        		
+        	},
+        	error : e => {
+        		alert('AJAX 실패1')
+        	}
+        })
+    }
+
     let login =()=>{
     	let x = {css: $.css(), img : $.img(), js : $.js()}
 		$('head').html(auth_vue.login_head(x)),
@@ -70,16 +98,14 @@ auth = (()=>{
 				e.preventDefault()
 				let data = {cid : $('#inputcid').val(), cpw : $('#inputPassword').val()}
 				$.ajax({
-					url : _+'/hcust/login',
+					url : _+'/hcusts/'+$('#inputcid').val(),
 					type: 'POST',
 					dataType: 'json',
 					data : JSON.stringify(data),
                 	contentType : 'application/json',
                 	success : d =>{
                 		alert(d.cname +'님 환영합니다.')
-                		$('body').html('<h1>마이페이지<br/></h1>'+
-                				'id : '+d.cid+',pw : '+d.cpw+',이름: '+d.cname+',회원번호:'+d.cnum)
-                		.addClass('text-center')},
+                		mypage()},
                 	error: e =>{
                 		alert('실풰')
                 	}
@@ -90,6 +116,9 @@ auth = (()=>{
 		.addClass('btn btn-lg btn-primary btn-block')
 		.appendTo('#btn_login')
     }
-   
-    return {onCreate, join, login}
+   let mypage=()=>{
+	   $('head').html(auth_vue.mpg_head()),
+	    $('body').html(auth_vue.mpg_body()).addClass('text-center')
+   }
+    return {onCreate, join, login, mypage}
 })();

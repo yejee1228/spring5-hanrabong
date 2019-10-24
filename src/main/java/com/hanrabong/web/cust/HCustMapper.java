@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 public interface HCustMapper {
 	public void insertCust(HCust cust);
 	public HCust selectByIdPw(HCust cust);
+	public int existId(String cid);
 }
