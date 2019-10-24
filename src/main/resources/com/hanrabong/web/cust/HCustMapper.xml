@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hanrabong.web.cust.HCustMapper">
+    <select id="countHCusts" resultType="int">
+        SELECT COUNT(*) COUNT FROM HCUST;
+    </select>
+    <insert id="insertCust" parameterType="com.hanrabong.web.cust.HCust">
+        INSERT INTO HCUST (cnum, cid, cpw, cname, gen, birth, skin_prob, skin_type, child, addr, tel, cpoint) 
+        VALUES(#{cnum},#{cid},#{cpw},#{cname},#{gen},#{birth},#{skinProb},#{skinType},#{child},#{addr},#{tel},#{cpoint})
+    </insert>
+	<select id="selectCustByCid" parameterType="com.hanrabong.web.cust.HCust" resultType="HCust">
+		SELECT * FROM HCUST WHERE cid LIKE #{cid} AND cpw LIKE #{cpw}
+	</select>
+	<select id="selectCnumByCid"  resultType="HCust">
+		SELECT cnum FROM HCUST WHERE cid LIKE #{cid}
+	</select>
+</mapper>
+

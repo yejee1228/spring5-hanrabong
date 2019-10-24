@@ -9,7 +9,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.hanrabong.web.controller"})
+@ComponentScan(basePackages = {"com.hanrabong.web"})
 public class ServletConfig implements WebMvcConfigurer {
 	@Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
