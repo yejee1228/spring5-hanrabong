@@ -22,7 +22,7 @@ import com.hanrabong.web.cust.HCust;
 import com.hanrabong.web.utl.Printer;
 
 @RestController
-@RequestMapping("/hcusts")
+@RequestMapping("/customers")
 
 public class HCustCtrl {
 	private static final Logger logger = LoggerFactory.getLogger(HCustCtrl.class);

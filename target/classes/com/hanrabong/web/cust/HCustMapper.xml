@@ -7,14 +7,21 @@
         SELECT COUNT(*) COUNT FROM HCUST;
     </select>
     <insert id="insertCust" parameterType="HCust">
-        INSERT INTO HCUST (cnum, cid, cpw, cname, gen, birth, skin_prob, skin_type, child, addr, tel, cpoint) 
-        VALUES(#{cnum},#{cid},#{cpw},#{cname},#{gen},#{birth},#{skinProb},#{skinType},#{child},#{addr},#{tel},#{cpoint})
+        INSERT INTO HCUST (cnum, cid, cpw, cname, gen, birth, skin_prob, 
+        				skin_type, child, addr, tel, cpoint) 
+        VALUES(#{cnum},#{cid},#{cpw},#{cname},#{gen},#{birth},#{skinProb},
+        		#{skinType},#{child},#{addr},#{tel},#{cpoint})
     </insert>
 	<select id="selectByIdPw" parameterType="com.hanrabong.web.cust.HCust" resultType="HCust">
-		SELECT * FROM HCUST WHERE cid LIKE #{cid} AND cpw LIKE #{cpw}
+		SELECT * 
+		FROM HCUST 
+		WHERE cid LIKE #{cid} 
+			AND cpw LIKE #{cpw}
 	</select>
 	<select id="existId" parameterType="string" resultType="int">
-		SELECT COUNT(*) COUNT FROM HCUST WHERE cid LIKE #{cid}
+		SELECT COUNT(*) COUNT 
+		FROM HCUST 
+		WHERE cid LIKE #{cid}
 	</select>
 
 </mapper>
