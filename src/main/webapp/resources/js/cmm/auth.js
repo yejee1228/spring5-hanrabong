@@ -74,6 +74,7 @@ auth = (()=>{
 		$('body').html(auth_vue.login_body({img : $.img()}))
 		.addClass('text-center')
     	login()
+    	access()
     }
     let join=()=>{
         $.ajax({
@@ -131,6 +132,36 @@ auth = (()=>{
 		})
 		.addClass('btn btn-lg btn-primary btn-block')
 		.appendTo('#btn_login')
+    }
+    let access = ()=>{
+    	$('#a_go_admin').click(()=>{
+    		let ok = confirm('사원입니까?')
+        	if(ok){
+        		let aid = prompt('사원번호를 입력하시오');
+        		let apw;
+        		alert(aid +"-> 잇츠 너의 사원버노")
+        		$.ajax({
+        			url:_+'/admins/'+aid,
+        			type: 'POST',
+        			dataType:'JSON',
+        			data:JSON.stringify({aid: aid, apw : prompt('사원비번을 입력하시오')}),
+        			contentType:'application/json',
+        			success: d=>{
+        				if(d.msg === 'SUCCESS'){
+        					alert('접근완료')
+        					admin.onCreate()
+        				}else{
+        					alert('사원번호와 비밀번호를 잘 생각해 보시오.')	
+        					app.run(_)
+        				}
+        				
+        			},
+        			error: e =>{
+        				alert('access 자체를 실패했다.')
+        			}
+        		})
+        	}
+    	})
     }
 
     return {onCreate, join, login}

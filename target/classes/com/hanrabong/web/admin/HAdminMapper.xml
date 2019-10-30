@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hanrabong.web.adm.HAdminMapper">
+  	<insert id="insertAdmin" parameterType="HAdmin">
+        INSERT INTO HADMIN (AID, APW, ANAME, AUTHORITY, PART)  
+        VALUES(#{aid},#{apw},#{aname},#{authority},#{part})
+    </insert>
+    <select id="selectAdmin" resultType="HAdmin" parameterType= "HAdmin">
+    	SELECT * FROM HAdmin WHERE AID LIKE #{aid} AND APW LIKE #{apw}
+    </select>
+ </mapper>

@@ -24,7 +24,6 @@ brd = (()=>{
 		.done(()=>{
 			setContentView()
 			navi.onCreate()
-		
 			})
 		.fail(()=>{
 			alert(WHEN_ERR)}
@@ -42,7 +41,7 @@ brd = (()=>{
 		$('#recent_updates .media').remove()
 		$('#suggestions').remove()
    	    $('#recent_updates .d-block').remove()
-   	    $.getJSON(_+'/brds/', d=>{
+   	    $.getJSON('/web/brds/', d=>{
    	    	let i = 0
    	   	    let res = ''
    			$.each(d,(i,j)=>{
@@ -96,7 +95,7 @@ brd = (()=>{
 				content : $('#write_button textarea[name="content"]').val()
 			}
 			$.ajax({
-				url: _+'/brds/',
+				url: '/web/brds/',
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(json),
@@ -145,7 +144,7 @@ brd = (()=>{
 	}
 	let updateBrd=x=>{
 		$.ajax({
-			url: _+'/brds/'+x.brdnum,
+			url: '/web/brds/'+x.brdnum,
 			type: 'PUT',
 			dataType: 'json',
 			data: JSON.stringify({
@@ -167,7 +166,7 @@ brd = (()=>{
 	}
 	let deleteBrd=x=>{
 		$.ajax({
-			url: _+'/brds/'+x.brdnum,
+			url: '/web/brds/'+x.brdnum,
 			type: 'DELETE',
 			dataType: 'json',
 			data: JSON.stringify({brdnum : x.brdnum}),

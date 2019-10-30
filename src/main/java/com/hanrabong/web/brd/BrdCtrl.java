@@ -61,6 +61,7 @@ public class BrdCtrl {
 		map.put("count",s.get());
 		return map;
 	}
+	
 	@PutMapping("/{brdnum}")
 	public Brd update(@PathVariable String brdnum, @RequestBody Brd param){
 		printer.accept("update 글목록:");
