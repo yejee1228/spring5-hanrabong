@@ -11,14 +11,4 @@ function Session(x){
 		img : ()=>{return sessionStorage.getItem('img');}
 	}
 }
-function User(x){
-	sessionStorage.setItem('cid',x.cid);
-	sessionStorage.setItem('cpw',x.cpw);
-	sessionStorage.setItem('cname',x.cname);
-	return {
-		cid : ()=>{return sessionStorage.getItem('cid');},
-		cpw : ()=>{return sessionStorage.getItem('cpw');},
-		cname : ()=>{return sessionStorage.getItem('cname');}
-	}
-}
 

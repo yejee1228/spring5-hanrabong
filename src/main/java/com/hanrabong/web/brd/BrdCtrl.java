@@ -42,6 +42,7 @@ public class BrdCtrl {
 		ISupplier<String> s = () -> mapper.countBrd();
 		map.clear();
 		map.put("count",s.get());
+		printer.accept("write 들어옴"+map.toString());
 		return map;
 	}	
 	

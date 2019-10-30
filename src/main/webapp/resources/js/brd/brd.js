@@ -1,25 +1,30 @@
 "use strict";
 var brd = brd || {}
 brd = (()=>{
-	const WHEN_ERR = '호출된 JS를 찾을 수 없습니다.'
-	let _, js, brd_vue_js, router_js, cid, cname
+	const WHEN_ERR = '호출된 JS를 찾을 수 없습니다. brd'
+	let _, js, img, css, brd_vue_js, router_js, navi_js, navi_vue_js
 	
 	let init =()=>{
-		_ = $.ctx()
-		js = $.js()
+		_ = sessionStorage.getItem('ctx')
+	    js = $.js()
+	    img = $.img()
+        css = $.css()
 		brd_vue_js = js+'/vue/brd_vue.js'
 		router_js = js+'/cmm/router.js'
-		cname = $.cname()
-		cid = $.cid()
+		navi_js = js+'/cmm/navi.js'
+		navi_vue_js = js+'/vue/navi_vue.js'
 	}
-	let onCreate =d=>{
+	let onCreate =()=>{
 		init()
 		$.when(
-			$.getScript(brd_vue_js)
+			$.getScript(brd_vue_js),
+			$.getScript(navi_vue_js),
+			$.getScript(navi_js)
 		)
 		.done(()=>{
 			setContentView()
-			navigate()
+			navi.onCreate()
+		
 			})
 		.fail(()=>{
 			alert(WHEN_ERR)}
@@ -27,14 +32,13 @@ brd = (()=>{
 	}
 	
 	let setContentView =()=>{
-			alert('setcontent')
 			$('head').html(brd_vue.brd_head()),
 	   	    $('body').html(brd_vue.brd_body()).addClass('text-center')
+	   	    $(navi_vue.navi_body()).appendTo('#navi')
 	   	    recent_updates()
 	   	    
 	}
 	let recent_updates =()=>{
-		alert('recent')
 		$('#recent_updates .media').remove()
 		$('#suggestions').remove()
    	    $('#recent_updates .d-block').remove()
@@ -59,21 +63,18 @@ brd = (()=>{
    	   	  			detail(j)
    	   	  		})
    			})
-   			
    	    })
-   	    
-  		
-   	    
 	}
 
 	let write=()=>{
+		alert('write'+getCookie("cname"))
 		$('#recent_updates').html(brd_vue.brd_write()).addClass('text-center')
 		$('#suggestions').remove()
-		$('#write_button input[name="writer"]').val(cname)
+		$('#write_button input[name="writer"]').val(getCookie("cname"))
 		$('<input>',{
 			value: "cancel",
 			style: "float:right;width:100px;margin-right:10px"
-			})
+		})	
 		.addClass("btn btn-danger")
 		.appendTo('#write_button')
 		.click(()=>{
@@ -106,22 +107,10 @@ brd = (()=>{
 				},
 				error: e=>{
 					alert('글쓰기 실패')
+					recent_updates()
 				}
 			})
 		})
-	}
-	let navigate=()=>{
-		$('<a>',{
-			href: '#',
-	   	    	click: e=>{
-	   	    		e.preventDefault()
-		   	    	write()
-	   	    	},
-	   	    	text : '글입력하기'
-	   	    })
-	   	    .addClass('nav-link')
-	   	    .appendTo('#go_write')
-
 	}
 	let detail=x=>{
 		alert('넘기는 num값'+x.brdnum)
@@ -193,5 +182,5 @@ brd = (()=>{
 			}
 		})
 	}
-		return {onCreate}
+		return {onCreate, write}
 	})();
