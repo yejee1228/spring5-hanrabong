@@ -1,6 +1,5 @@
 package com.hanrabong.web.cust;
 
-
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,15 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hanrabong.web.cmm.IConsumer;
 import com.hanrabong.web.cmm.IFunction;
-import com.hanrabong.web.cmm.IPredicate;
-import com.hanrabong.web.cmm.ISupplier;
 import com.hanrabong.web.cust.HCust;
 import com.hanrabong.web.utl.Printer;
 
@@ -55,6 +51,7 @@ public class HCustCtrl {
 	public HCust login (@PathVariable String cid, @RequestBody HCust param){
 		IFunction<HCust,HCust> f=T-> mapper.selectByIdPw(param);
 		return f.apply(param);
-	} 
+	}
+	
 	
 }//

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.hanrabong.web.brd.BrdMapper">
+  	<insert id="insertBrd" parameterType="Brd">
+        INSERT INTO BRD (BRDNUM, TITLE, WRITER, BPOINT, WRITEDATE, CNUM, CONTENT, COMSEQ) 
+        VALUES(#{brdnum},#{title},#{writer},#{bpoint},#{writedate},#{cnum},#{content},#{comseq})
+    </insert>
+    <select id="countBrd" resultType="String">
+    	SELECT COUNT(*) FROM BRD
+    </select>
+    <select id="selectAll" resultType="Brd">
+    	SELECT * FROM BRD
+    </select>
+	<update id="updatecontent" parameterType="Brd">
+		UPDATE BRD SET  WHERE BRDNUM LIKE #{brdnum}
+	</update>
+	<update id="updateBrd" parameterType="Brd">
+		UPDATE BRD SET TITLE = #{title}, CONTENT = #{content} WHERE BRDNUM LIKE #{brdnum}
+	</update>
+	<delete id="deleteBrd" parameterType="Brd">
+		DELETE FROM BRD WHERE BRDNUM LIKE #{brdnum}
+	</delete>
+	<select id="selectBrd" resultType="Brd" parameterType="Brd">
+    	SELECT * FROM BRD WHERE BRDNUM LIKE #{brdnum}
+    </select>
+  </mapper>
