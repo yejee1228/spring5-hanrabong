@@ -4,7 +4,7 @@ navi =(()=>{
 	const WHEN_ERR = '호출된 JS를 찾을 수 없습니다.navi'
 	let _, js, img, css, cid, brd_js, auth_js
 	let init =()=>{
-		_ = $.ctx()
+		_ = sessionStorage.getItem('ctx')
 	    js = $.js()
 	    img = $.img()
 	    css = $.css()
@@ -16,10 +16,10 @@ navi =(()=>{
 		$.when(
 			$.getScript(auth_js),
 			$.getScript(brd_js)
-		).done(
+		).done(()=>{
 			init(),
 			setContentView()
-		).fail(()=>{
+		}).fail(()=>{
 			alert("실패")
 		})
 	}

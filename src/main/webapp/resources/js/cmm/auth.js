@@ -2,7 +2,7 @@
 var auth = auth || {};
 auth = (()=>{
 	const WHEN_ERR = '호출하는 JS 파일을 찾지 못했습니다.'
-    let _, js, img, css, auth_vue_js,brd_js, router_js, cookie_js
+    let _, js, img, css, auth_vue_js,brd_js, router_js, cookie_js, adm_js
     let init =()=>{
         _ = $.ctx()
         js = $.js()
@@ -12,6 +12,7 @@ auth = (()=>{
         brd_js = js +'/brd/brd.js'
         router_js = js +'/cmm/router.js'
         cookie_js = js +'/cmm/cookie.js'
+        adm_js = js +'/adm/adm.js'
     }
     let onCreate =()=>{
         init()
@@ -19,7 +20,8 @@ auth = (()=>{
         	$.getScript(auth_vue_js),
         	$.getScript(brd_js),
         	$.getScript(router_js),
-        	$.getScript(cookie_js)
+        	$.getScript(cookie_js),
+        	$.getScript(adm_js)
         		
         ).done(()=>{
         	setContentView()
@@ -137,9 +139,8 @@ auth = (()=>{
     	$('#a_go_admin').click(()=>{
     		let ok = confirm('사원입니까?')
         	if(ok){
-        		let aid = prompt('사원번호를 입력하시오');
+        		/*let aid = prompt('사원번호를 입력하시오');
         		let apw;
-        		alert(aid +"-> 잇츠 너의 사원버노")
         		$.ajax({
         			url:_+'/admins/'+aid,
         			type: 'POST',
@@ -147,10 +148,9 @@ auth = (()=>{
         			data:JSON.stringify({aid: aid, apw : prompt('사원비번을 입력하시오')}),
         			contentType:'application/json',
         			success: d=>{
-        				if(d.msg === 'SUCCESS'){
-        					alert('접근완료')
-        					admin.onCreate()
-        				}else{
+        				if(d.msg === 'SUCCESS'){*/
+        					adm.onCreate()
+        				/*}else{
         					alert('사원번호와 비밀번호를 잘 생각해 보시오.')	
         					app.run(_)
         				}
@@ -159,7 +159,7 @@ auth = (()=>{
         			error: e =>{
         				alert('access 자체를 실패했다.')
         			}
-        		})
+        		})*/
         	}
     	})
     }

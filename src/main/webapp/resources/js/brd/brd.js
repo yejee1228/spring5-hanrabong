@@ -6,9 +6,9 @@ brd = (()=>{
 	
 	let init =()=>{
 		_ = sessionStorage.getItem('ctx')
-	    js = $.js()
-	    img = $.img()
-        css = $.css()
+	    js = _+'/resources/js'
+	    img = sessionStorage.getItem('img')
+        css = sessionStorage.getItem('css')
 		brd_vue_js = js+'/vue/brd_vue.js'
 		router_js = js+'/cmm/router.js'
 		navi_js = js+'/cmm/navi.js'
@@ -38,10 +38,11 @@ brd = (()=>{
 	   	    
 	}
 	let recent_updates =()=>{
+		init()
 		$('#recent_updates .media').remove()
 		$('#suggestions').remove()
    	    $('#recent_updates .d-block').remove()
-   	    $.getJSON('/web/brds/', d=>{
+   	    $.getJSON(_+'/brds/', d=>{
    	    	let i = 0
    	   	    let res = ''
    			$.each(d,(i,j)=>{
@@ -66,6 +67,7 @@ brd = (()=>{
 	}
 
 	let write=()=>{
+		init()
 		alert('write'+getCookie("cname"))
 		$('#recent_updates').html(brd_vue.brd_write()).addClass('text-center')
 		$('#suggestions').remove()
@@ -95,7 +97,7 @@ brd = (()=>{
 				content : $('#write_button textarea[name="content"]').val()
 			}
 			$.ajax({
-				url: '/web/brds/',
+				url: _+'/brds/',
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(json),
@@ -143,8 +145,9 @@ brd = (()=>{
 		})
 	}
 	let updateBrd=x=>{
+		init()
 		$.ajax({
-			url: '/web/brds/'+x.brdnum,
+			url: _+'/brds/'+x.brdnum,
 			type: 'PUT',
 			dataType: 'json',
 			data: JSON.stringify({
@@ -165,8 +168,9 @@ brd = (()=>{
 		
 	}
 	let deleteBrd=x=>{
+		init()
 		$.ajax({
-			url: '/web/brds/'+x.brdnum,
+			url: _+'/brds/'+x.brdnum,
 			type: 'DELETE',
 			dataType: 'json',
 			data: JSON.stringify({brdnum : x.brdnum}),
