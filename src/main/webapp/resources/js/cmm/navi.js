@@ -5,9 +5,9 @@ navi =(()=>{
 	let _, js, img, css, cid, brd_js, auth_js
 	let init =()=>{
 		_ = sessionStorage.getItem('ctx')
-	    js = $.js()
-	    img = $.img()
-	    css = $.css()
+	    js = _+'/resources/js'
+	    img = _+'/resources/img'
+        css = _+'/resources/css'
 		brd_js = js +'/brd/brd.js'
 		auth_js = js+'/cmm/auth.js'
 	}
@@ -48,7 +48,7 @@ navi =(()=>{
 		    	e.preventDefault()
 		    	alert('로그아웃')
 	   	    	deleteCookie()
-	   	    	app.run("/web")
+	   	    	app.run(_)
 		    })
 	}
 	return {onCreate}

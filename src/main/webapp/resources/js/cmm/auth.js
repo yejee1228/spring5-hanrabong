@@ -120,7 +120,6 @@ auth = (()=>{
 						}),
                 	contentType : 'application/json',
                 	success : d =>{
-                		// $.extend(new User(d))
                 		setCookie("cname",d.cname)
                 		alert(getCookie("cname")+'님 환영합니다')
                 		brd.onCreate()
@@ -136,7 +135,9 @@ auth = (()=>{
 		.appendTo('#btn_login')
     }
     let access = ()=>{
-    	$('#a_go_admin').click(()=>{
+    	$('#a_go_admin')
+    	.css({color:"gray"})
+    	.click(()=>{
     		let ok = confirm('사원입니까?')
         	if(ok){
         		/*let aid = prompt('사원번호를 입력하시오');

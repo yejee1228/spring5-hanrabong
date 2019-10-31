@@ -9,7 +9,7 @@ navi_vue = {
 
 		'      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">'+
 		'        <ul class="navbar-nav mr-auto">'+
-		'          <li id = "go_write" class="nav-item active">'+
+		'          <li id = "go_write" class="nav-item">'+
 		'          </li>'+
 		'          <li id = "logout" class="nav-item">'+
 		'          </li>'+

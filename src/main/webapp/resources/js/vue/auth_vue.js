@@ -265,18 +265,9 @@ auth_vue = {
 		'        }'+
 		'      }'+
 		'    </style>'+
-		'    <link href="'+x.css+'/signin.css" rel="stylesheet">'+
+		'    <link href="/web/resources/css/signin.css" rel="stylesheet">'+
 		'   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">'+
-		/*'<style>'+
-		'#customers td {'+
-		'  padding: 8px;'+
-		'  padding-top: 12px;'+
-		'  padding-bottom: 12px;'+
-		'  text-align: left;'+
-		'  background-color: #4CAF50;'+
-		'  color: white;'+
-		'}'+
-		'</style>'*/
+		
 		'</head>'
 	},
 	login_body : x=>{

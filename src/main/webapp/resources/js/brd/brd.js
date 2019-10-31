@@ -7,8 +7,8 @@ brd = (()=>{
 	let init =()=>{
 		_ = sessionStorage.getItem('ctx')
 	    js = _+'/resources/js'
-	    img = sessionStorage.getItem('img')
-        css = sessionStorage.getItem('css')
+	    img = _+'/resources/img'
+        css = _+'/resources/css'
 		brd_vue_js = js+'/vue/brd_vue.js'
 		router_js = js+'/cmm/router.js'
 		navi_js = js+'/cmm/navi.js'
@@ -23,7 +23,7 @@ brd = (()=>{
 		)
 		.done(()=>{
 			setContentView()
-			navi.onCreate()
+			
 			})
 		.fail(()=>{
 			alert(WHEN_ERR)}
@@ -34,6 +34,7 @@ brd = (()=>{
 			$('head').html(brd_vue.brd_head()),
 	   	    $('body').html(brd_vue.brd_body()).addClass('text-center')
 	   	    $(navi_vue.navi_body()).appendTo('#navi')
+	   	    navi.onCreate()
 	   	    recent_updates()
 	   	    
 	}
@@ -68,7 +69,6 @@ brd = (()=>{
 
 	let write=()=>{
 		init()
-		alert('write'+getCookie("cname"))
 		$('#recent_updates').html(brd_vue.brd_write()).addClass('text-center')
 		$('#suggestions').remove()
 		$('#write_button input[name="writer"]').val(getCookie("cname"))
@@ -104,17 +104,16 @@ brd = (()=>{
 				contentType:'application/json',
 				success: d=>{
 					$('#recent_updates div.container-fluid').remove()
-					recent_updates()	
+					setContentView()	
 				},
 				error: e=>{
 					alert('글쓰기 실패')
-					recent_updates()
+					setContentView()
 				}
 			})
 		})
 	}
 	let detail=x=>{
-		alert('넘기는 num값'+x.brdnum)
 		$('#recent_updates').html(brd_vue.brd_write()).addClass('text-center')
 		$('#suggestions').remove()
 		$('#recent_updates .container-fluid h1').html('상세보기')
@@ -159,7 +158,7 @@ brd = (()=>{
 			success: d=>{
 				alert("dd")
 				$('#recent_updates div.container-fluid').remove()
-				recent_updates(d)	
+				setContentView()	
 			},
 			error: e=>{
 				alert('수정실패')
@@ -178,7 +177,7 @@ brd = (()=>{
 			success: d=>{
 				$('#recent_updates div.container-fluid').remove()
 				setContentView()	
-				alert(x.writer+'님,'+x.writer+'님의 글이 삭제되었습니다.')
+				alert('글이 삭제되었습니다.')
 			},
 			error: e =>{
 				alert('삭제실패')
