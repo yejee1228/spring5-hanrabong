@@ -78,17 +78,29 @@ adm = (()=>{
 		
 	} 
 	let webCrawl=()=>{
-		$('<h1>Web Crawling</h1><br/><br/><form action="/action_page.php">'+
-		'  <select name="webs" size="1"></select>'+
-		'  <input type="text" style = "width:80%"/>'+
-		'  <input type="submit" value="클릭"/>'+
+		$('#right').empty()
+		$('<h1>Web Crawling</h1><br/><br/><form id = "crawl_form">'+
+		'  <select name="site" size="1"></select>'+
+		'  <input type="text" style = "width:80%" placeholder="insert URL for crawling"/>'+
 		'</form>').appendTo('#right')
-		
-		$.each([{value:'News',text:'뉴스'},{value:'Entertain',text:'연예'},{value:'Sports',text:'스포츠'}],
+		$.each(['google','daum','naver'],
 				(i,j)=>{
-			$('<option value="'+j.value+'">'+j.text+'</option>')
-			.appendTo('select[name="webs"]')
+			$('<option value="'+j+'">'+j+'</option>')
+			.appendTo('#crawl_form select[name="site"]')
 			})
+		$('<button type="submit">go</button>').appendTo('#crawl_form')
+		.click(e=>{
+			e.preventDefault()
+			let arr = [$('#crawl_form select[name="site"]').val(),
+						$('#crawl_form input[type="text"]').val()]
+			if(!$.fn.nullChecker(arr)){
+				$.getJSON(_+'/tx/crawling/'+arr[0]+'/'+arr[1],
+						d=>{
+							
+							$('#right').empty().append('<div>'+d+'</div>')
+						})
+			}
+		})
 	}
 	
 	let custManager=x=>{
