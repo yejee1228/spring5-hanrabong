@@ -29,8 +29,8 @@ public class Proxy {
 			Connection.Response response = Jsoup.connect(url)
 					.method(Connection.Method.GET).execute();
 			Document document = response.parse();
-			//String text = document.html();
-			String text = document.text();
+			String text = document.html();
+			//String text = document.text();
 			p.accept("proxy "+text);
 			proxyList.add(text);
 		} catch (Exception e2) {

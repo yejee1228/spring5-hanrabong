@@ -7,7 +7,17 @@
         INSERT INTO HADMIN (AID, APW, ANAME, AUTHORITY, PART)  
         VALUES(#{aid},#{apw},#{aname},#{authority},#{part})
     </insert>
-    <select id="selectAdmin" resultType="HAdmin" parameterType= "HAdmin">
+    <select id="selectAdmin" resultType="HAdmin" parameterType= "com.hanrabong.web.adm.HAdmin">
     	SELECT * FROM HAdmin WHERE AID LIKE #{aid} AND APW LIKE #{apw}
     </select>
+    <!-- anum, aid, apw, aname, authority, part -->
+    <select id="selectAdmin2" parameterType="hashMap" resultType="HAdmin">
+		SELECT * 
+		FROM HADMIN 
+		<trim prefix="WHERE" suffixOverrides="AND |OR">
+		WHERE $(aid) LIKE #{aid} 
+	
+		 AND apw LIKE #{apw}
+		</trim>	
+	</select>
  </mapper>

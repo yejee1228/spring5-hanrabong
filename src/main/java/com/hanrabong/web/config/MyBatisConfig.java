@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @MapperScan(basePackages= {"com.hanrabong.web"})
+//@EnableAspectJAutoProxy
+//@EnableTransactionManagement
 public class MyBatisConfig {
 	@Autowired
 	ApplicationContext applicationContext; //스프링이 만든 컨텍스트
