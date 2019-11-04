@@ -23,7 +23,7 @@ navi =(()=>{
 			alert("실패")
 		})
 	}
-
+//
 	let setContentView=()=>{
 		$('<a>',{
 			href: '#',
