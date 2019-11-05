@@ -1,7 +1,7 @@
 "use strict";
 var navi = navi || {}
 navi =(()=>{
-	const WHEN_ERR = '호출된 JS를 찾을 수 없습니다.navi'
+	const WHEN_ERR = '호출된 JS를 찾을 수 없습니다.'
 	let _, js, img, css, cid, brd_js, auth_js
 	let init =()=>{
 		_ = sessionStorage.getItem('ctx')

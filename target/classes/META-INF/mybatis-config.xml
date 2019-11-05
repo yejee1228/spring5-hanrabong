@@ -8,5 +8,6 @@
        <typeAlias alias="HCust"  type="com.hanrabong.web.cust.HCust"/>
        <typeAlias alias="Brd"  type="com.hanrabong.web.brd.Brd"/>
        <typeAlias alias="HAdmin"  type="com.hanrabong.web.adm.HAdmin"/>
+       <typeAlias alias="Proxy"  type="com.hanrabong.web.pxy.Proxy"/>
     </typeAliases>
 </configuration>

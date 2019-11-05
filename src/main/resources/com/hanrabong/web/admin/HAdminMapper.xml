@@ -15,9 +15,8 @@
 		SELECT * 
 		FROM HADMIN 
 		<trim prefix="WHERE" suffixOverrides="AND |OR">
-		WHERE $(aid) LIKE #{aid} 
-	
-		 AND apw LIKE #{apw}
+		WHERE ${aid} LIKE '${aid}' 
+		 AND ${apw} LIKE #{apw}
 		</trim>	
 	</select>
  </mapper>

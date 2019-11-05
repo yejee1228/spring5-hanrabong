@@ -1,5 +1,7 @@
 package com.hanrabong.web.brd;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,47 +21,52 @@ import com.hanrabong.web.brd.Brd;
 import com.hanrabong.web.brd.BrdMapper;
 import com.hanrabong.web.cmm.IConsumer;
 import com.hanrabong.web.cmm.IFunction;
+import com.hanrabong.web.cmm.IPredicate;
 import com.hanrabong.web.cmm.ISupplier;
+import com.hanrabong.web.pxy.Proxy;
+import com.hanrabong.web.pxy.ProxyMap;
 import com.hanrabong.web.utl.Printer;
 
 @RestController
 @RequestMapping("/brds")
 public class BrdCtrl {
 	private static final Logger Logger = LoggerFactory.getLogger(BrdCtrl.class);
-	@Autowired Map<String,Object> map;
+	@Autowired ProxyMap map;
 	@Autowired Printer printer;
 	@Autowired Brd brd;
 	@Autowired BrdMapper mapper;
 	@Autowired List<Brd> list;
+	@Autowired Proxy pxy;
 	
 	@PostMapping("/")
 	public Map<?,?> write(@RequestBody Brd param){
 		printer.accept("write 들어옴");
 		IConsumer<Brd> c = T->mapper.insertBrd(param);
 		c.accept(param);
-		map.clear(); 
-		map.put("msg","SUCCESS");
 		ISupplier<String> s = () -> mapper.countBrd();
-		map.clear();
-		map.put("count",s.get());
+		map.accept(Arrays.asList("msg","count"), Arrays.asList("SUCCESS",s.get()));
 		printer.accept("write 들어옴"+map.toString());
-		return map;
+		return map.get();
 	}	
 	
-	@GetMapping("/")
-	public List<Brd> list(){
+	@GetMapping("/page/{pageNo}/size/{pageSize}")
+	public Map<?,?> list(@PathVariable String pageNo, @PathVariable String pageSize){
+		printer.accept("넘어온 페이지넘버: " + pageNo);
+		pxy.setPageNum(pxy.parseInt(pageNo));
+		pxy.setPageSize(pxy.parseInt(pageSize));
+		pxy.paging();
 		list.clear();
-		ISupplier<List<Brd>> s =()->mapper.selectAll();
+		ISupplier<List<Brd>> s =()->mapper.selectAll(pxy);
+		map.accept(Arrays.asList("list","pages"), Arrays.asList(s.get(),Arrays.asList(1,2,3,4,5)));
 		printer.accept("전체 글목록:"+s.get());
-		return s.get();
+		return map.get();
 	}
-	
+		
 	@GetMapping("/count")
 	public Map<?,?> count(){
 		ISupplier<String> s = () -> mapper.countBrd();
-		map.clear();
-		map.put("count",s.get());
-		return map;
+		map.accept(Arrays.asList("count"), Arrays.asList(s.get()));
+		return map.get();
 	}
 	
 	@PutMapping("/{brdnum}")
@@ -77,9 +84,8 @@ public class BrdCtrl {
 		printer.accept("컨트롤러");
 		IConsumer<Brd> c = T ->mapper.deleteBrd(param);
 		c.accept(param);
-		map.clear();
-		map.put("msg", "SUCCESS");
-		return map;
+		map.accept(Arrays.asList("msg"), Arrays.asList("SUCCESS"));
+		return map.get();
 		
 	}
 		

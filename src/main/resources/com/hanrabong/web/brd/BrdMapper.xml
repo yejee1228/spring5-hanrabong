@@ -10,8 +10,12 @@
     <select id="countBrd" resultType="String">
     	SELECT COUNT(*) FROM BRD
     </select>
-    <select id="selectAll" resultType="Brd">
-    	SELECT * FROM BRD
+    <select id="selectAll" resultType="Brd" parameterType="Proxy">
+    	select r1.* from(select *
+		from BRD
+		ORDER BY BRDNUM DESC)r1 
+		LIMIT ${startRow}, ${pageSize};
+
     </select>
 	<update id="updatecontent" parameterType="Brd">
 		UPDATE BRD SET  WHERE BRDNUM LIKE #{brdnum}
