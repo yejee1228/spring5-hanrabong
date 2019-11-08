@@ -47,8 +47,9 @@ brd = (()=>{
 		$('#recent_updates .media').remove()
 		$('#suggestions').remove()
    	    $('#recent_updates .d-block').remove()
-   	    
-   	    $.getJSON(_+'/brds/page/'+x.page+'/size/'+x.size,d=>{
+   	    $('#recent_updates .container').remove()
+   	    $.getJSON(_+'/brds/page/'+x.page+'/size/'+x.size, d=>{
+   	    	let pxy = d.pxy
    	    	let i = 0
    	   	    let res = ''
    			$.each(d.list,(i,j)=>{
@@ -73,29 +74,46 @@ brd = (()=>{
    			.appendTo('#recent_updates')
    			.css('padding-left : 30%')
    			$('#pagination').empty()
-   			$(compo_vue.pageSize()).prependTo('div.container')
+   			$(compo_vue.pageSize()).appendTo('div.container')
    			$.each([5,10,15],(i,j)=>{
    				$('<option value="'+j+'">'+j+'개씩</option>')
    						.appendTo('#listSizeSelectDiv select')
    			})
-   			$('<li class="page-item"><a class="page-link" href="#">Previous</a></li>')
-   			.prependTo('#pagination')
-   			.click(()=>{
-   				alert('앞블락으로')
-   				 $.getJSON(_+'/brds/prepage/'+d.page+'/size/'+d.size, d=>{
-   					recent_updates(d)
-   				})
-   			})
+   			$('#crawl_form option[value='+pxy.pageSize+'개씩]').attr('selected',true)
+   			$('#crawl_form').change(()=>{
+   				recent_updates({page: pxy.pageNum, size: $('#crawl_form option:selected').val()})
+			})
    			
-   			$.each(d.pages,(i,j)=>{
-   				$('<li class="page-item"><a class="page-link" href="#">'+j+'</a></li>')
-   				.appendTo('#pagination')
-   	    	})
-   	    	$('<li class="page-item"><a class="page-link" href="#">Next</a></li>')
-   	    	.appendTo('#pagination')
-   	    	.click(()=>{
-   	    		alert('다음페이지로')
-   	    	})
+   			if(pxy.existPrev){
+   				$('<li class="page-item"><a class="page-link" href="#">Previous</a></li>')
+   	   			.appendTo('#pagination')
+   	   			.click(()=>{
+   	   				alert('앞블락으로')
+   	   				 recent_updates({page: pxy.prevBlock, size: pxy.pageSize})
+   	   			})
+   			}
+   	    	for(i=pxy.startPage; i<=pxy.endPage; i++) {
+   	    		if(pxy.pageNum==i){
+   	    			$('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>')
+   	    			.appendTo('#pagination')
+   	    			.addClass('active')
+   	    		}else{
+   	    			$('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>')
+   	    			.appendTo('#pagination')
+   	    			.click(function(){
+   	    				alert($(this).children('.page-link').text())
+   	    				recent_updates({page: $(this).children('.page-link').text(), size: pxy.pageSize})
+   	    			})
+   	    		}
+   			}
+   	    	if(pxy.existNext){
+   	    		$('<li class="page-item"><a class="page-link" href="#">Next</a></li>')
+   	   	    	.appendTo('#pagination')
+   	   	    	.click(()=>{
+   	   	    		alert('다음페이지로'+pxy.pageSize)
+   	   	    		recent_updates({page: pxy.nextBlock, size:pxy.pageSize})
+   	   	    	})
+   	    	}
    	    	$('#pagination').css({'place-content':'center'})
    	    	$('#listSizeSelectDiv').css({'text-align':'right'})
    	    })
@@ -139,7 +157,7 @@ brd = (()=>{
 				contentType:'application/json',
 				success: d=>{
 					$('#recent_updates div.container-fluid').remove()
-					setContentView()	
+					setContentView(d)	
 				},
 				error: e=>{
 					alert('글쓰기 실패')

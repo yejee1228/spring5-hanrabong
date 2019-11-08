@@ -52,13 +52,12 @@ public class BrdCtrl {
 	@GetMapping("/page/{pageNo}/size/{pageSize}")
 	public Map<?,?> list(@PathVariable String pageNo, @PathVariable String pageSize){
 		printer.accept("넘어온 페이지넘버: " + pageNo);
-		pxy.setPageNum(pxy.parseInt(pageNo));
-		pxy.setPageSize(pxy.parseInt(pageSize));
+		pxy.setPageNum(pxy.integer(pageNo));
+		pxy.setPageSize(pxy.integer(pageSize));
 		pxy.paging();
 		list.clear();
 		ISupplier<List<Brd>> s =()->mapper.selectAll(pxy);
-		map.accept(Arrays.asList("list","pages"), Arrays.asList(s.get(),Arrays.asList(1,2,3,4,5)));
-		printer.accept("전체 글목록:"+s.get());
+		map.accept(Arrays.asList("list","pxy"), Arrays.asList(s.get(),pxy));
 		return map.get();
 	}
 		
