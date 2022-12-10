@@ -15,7 +15,7 @@
 	</contributors>
 	<properties>
 		<java-version>1.8</java-version>
-		<spring-version>5.0.7.RELEASE</spring-version>
+		<spring-version>6.0.0</spring-version>
 		<aspectj-version>1.6.10</aspectj-version>
 		<slf4j-version>1.6.6</slf4j-version>
 		<log4j-version>1.2.15</log4j-version>
